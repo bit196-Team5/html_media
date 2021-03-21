@@ -1,0 +1,409 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>오조라고 : MultiMedia</title>
+    <!--favicon-->
+    <link rel="icon" href="img/html5_18891.ico" />
+    <!--폰트어썸-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <!--reset.css-->
+    <link rel="stylesheet" href="css/reset.css" />
+    <!--노토산스 폰트-->
+    <link rel="stylesheet" href="css/notoserif.css" />
+    <!--템플릿용 css를 외부css로-->
+    <link rel="stylesheet" href="css/default.css" />
+    <style>
+        #content {
+            text-align: center;
+        }
+        #content h2 {
+            font-size: 50px;
+        }
+        #videotitle {
+			margin: 20px 0;
+			font-size: 50px;
+			font-weight: 700;
+		}
+        #btnwrap { 
+            margin: 30px 0;
+        }
+        #btnsc, #btngif {
+            background-color: #fff;
+            border-bottom: 3px solid #BDBDBD;
+            width: 180px;
+            padding: 10px 0;
+            margin: 0 15px;
+            font-weight: 700;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        #btnsc:hover, #btngif:hover, #speed:hover {
+            border-bottom: 3px solid #D1382B;
+            transition: .2s ease-in;
+        }
+        select {
+            appearance: none;
+            -moz-appearance: none; /* Firefox */ 
+            -webkit-appearance: none; /* Safari and Chrome */
+        }
+        #speed {
+            background-color: #fff;
+            border: 0;
+            border-bottom: 3px solid #BDBDBD;
+            width: 180px;
+            padding: 10px 0;
+            margin: 0 15px;
+            font-weight: 700;
+            font-size: 20px;
+            text-align-last: center;
+            text-align: center;
+            -ms-text-align-last: center;
+            -moz-text-align-last: center;
+            cursor: pointer;
+        }
+        #videowrap {
+            width: 1000px;
+            display: inline-block;
+        }
+        #delall {
+            width: 990px;
+            border: 0;
+            margin-bottom: 20px;
+            padding: 10px 0;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        #delall:hover {
+            background-color: #D1382B;
+            color: #fff;
+            cursor: pointer;
+            transition: .2s ease-in-out;
+        }
+        .delli {
+            display: inline-block;
+            width: 320px;
+            margin: 10px 5px;
+        }
+        .delbtn {
+            display: inline-block;
+            width: 320px;
+            height: 40px;
+            border-radius: 7px;
+            font-size: 18px;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+        .delbtn:hover {
+            color: #D1382B;
+        }
+        #wrap {
+            display: none;
+            width: 1000px;
+            transition: .2s ease-in-out;
+            text-align: center;
+        }
+        #gifplay {
+            display: none;
+            width: 640px;
+            padding: 20px 0;
+            margin: 10px auto;
+            text-align: center;
+            border: 3px dashed #dbdbdb;
+        }
+        #gifCanvas {
+            cursor: pointer;
+        }
+        #output {
+            height: 720px;
+        }
+
+        #playlist {
+            font-size: 20px;
+            font-weight: 700;
+            display: inline-block;
+        }
+        #playlist span {
+           display: inline-block;
+           font-size: 25px;
+           padding: 10px;
+           width: 600px;
+           color: #BDBDBD;
+           box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+           transition: transform 0.5s;
+        }
+        #playlist span i {
+            font-size: 18px;
+        }
+        #playlist ul {
+            position: relative;
+        }
+        #playlist ul li {
+            padding: 10px 10px 15px 10px;
+            width: 600px;
+            background-color: #fff;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+            cursor: pointer;
+        }
+        #playlist ul li:hover {
+			background-color: #f2f2f2;
+		}
+    </style>
+</head>
+<body>
+<header id="header">
+    <div class="aux">
+        <h1 id="logo">
+            <a href="">
+                <img src="img/Other-html-5-icon.png" height="70"/>
+                <span>오조라고</span>
+            </a>
+        </h1>
+        <nav id="gnb">
+            <h2 class="screen_out">주요서비스</h2>
+            <ul>
+                <li>
+                    <a href="image.html">
+                        IMAGE
+                    </a>
+                </li>
+	            <li>
+                    <a href="audio.html">
+                        AUDIO
+                    </a>
+                </li>
+                <li>
+                    <a href="video.html">
+                        VIDEO
+                    </a>
+                </li>
+            </ul>
+        </nav><!--//#gnb-->
+    </div><!--//.aux-->
+</header><!--//#header-->
+<main id="content">
+    <div class=".aux">
+        <div >
+            <div id="videowrap">
+                <div id="videotitle">
+					VIDEO
+				</div>
+                <div id="playlist">
+                    <span><i class="fas fa-music"></i> PlayList <i class="fas fa-music"></i></span>
+                    <ul>
+                        <li value="videos/basic.mp4">kakao band</li>
+                        <li value="videos/christmas.mp4">kakao happy christmas</li>
+                        <li value="videos/special.mp4">kakao special edition</li>
+                    </ul>
+                </div>
+                <div id="btnwrap">
+                    <button id="btnsc">스크린샷</button>
+                    <button id="btngif">움짤플레이</button>
+                    <select onchange="setPlaySpeed(this)" id = "speed">
+                        <option disabled selected>재생속도</option>
+                        <option value="0.5">0.5배속</option>
+                        <option value="1.0">1.0배속</option>
+                        <option value="1.5">1.5배속</option>
+                        <option value="2.0">2.0배속</option>
+                        <option value="10.0">10배속</option>
+                    </select>
+                </div>
+                <div id="ratewrap">
+
+                </div>
+                <div id="videoplay">
+                    <video id="vid" controls>
+                        <source src="/src/videoplayback.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div id="wrap">
+                    <div id="gifplay">
+                        <canvas id="gifCanvas" width="480" height="270"></canvas>
+                    </div>
+                    <button id="delall">전체삭제</button>
+                    <div id="output">
+    
+                    </div>
+                </div>
+                
+            </div>
+    </div>
+</main><!--//#content-->
+<footer id="footer">
+    <div class="aux">
+        <div id="policy">
+            <h4 class="screen_out">정책 및 약관</h4>
+            <ul>
+                <li><a href="">회사소개</a></li><!--
+	                --><li><a href="">광고</a></li><!--
+	                --><li><a href="">이용약관</a></li><!--
+	                --><li><a href=""><strong>개인정보이용약관</strong></a></li><!--
+	                --><li><a href="">고객센터</a></li>
+            </ul>
+        </div><!-- //policy  -->
+        <address>&copy; 2021 <a href="">5jolago</a></address>
+    </div><!--//.aux-->
+</footer><!--//#footer-->
+</body>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    let video = document.getElementById("vid");
+    let scaleFactor = 2;
+    let snapshots = [];
+
+    let output = document.getElementById("output");
+    let wrap = document.getElementById("wrap");
+
+    //자동재생
+    window.onload = function(){
+        video.play();
+    }
+    //재생속도조절
+    function setPlaySpeed(e){
+		switch (e.value) {
+		case "0.5": video.playbackRate = 0.5;
+			break;
+		case "1.0": video.playbackRate = 1.0;
+			break;
+		case "1.5": video.playbackRate = 1.5;
+			break;
+		case "2.0": video.playbackRate = 2.0;
+			break;
+		case "10.0" : video.playbackRate = 10.0;
+			break;
+		}
+	}
+    //캡처기능
+    function capture(video, scaleFactor) {
+        if(scaleFactor == null) {
+            scaleFactor = 1;
+        }
+        let w = video.videoWidth*scaleFactor;
+        let h = video.videoHeight*scaleFactor;
+
+        let canvas = document.createElement('canvas');
+        canvas.width = w/4;
+        canvas.height = h/4;
+        let ctx = canvas.getContext('2d');
+        ctx.drawImage(video, 0, 0, w/4, h/4);
+        return canvas;
+    }
+    //캡처
+    document.getElementById("btnsc").onclick = function screenshot() {
+        let canvas = capture(video, scaleFactor);
+
+        wrap.style.display = "inline-block";
+
+        snapshots.push(canvas);
+        output.innerHTML = ""; 
+        
+        for(let i=0; i<snapshots.length; i++) {
+            let delli = document.createElement("li");
+            delli.setAttribute('class','delli');
+            output.appendChild(delli);
+            let divcan = output.lastChild;
+            divcan.appendChild(snapshots[i]);
+
+            let delbtn = document.createElement('button');
+            delbtn.setAttribute('class','delbtn');
+            // delbtn.innerText = "<i class="fas fa-trash-alt"></i>";
+            let delicon = document.createElement("i");
+            delicon.setAttribute('class','fas fa-trash-alt');
+            delbtn.appendChild(delicon);
+            divcan.appendChild(delbtn);
+        }
+        //삭제버튼
+        let delbtns = document.getElementsByClassName("delli");
+        function delsc(event) {
+            let parent = document.getElementById("output");
+            let delli = event.currentTarget;
+
+            let nodes = parent.childNodes;
+            for (var i = 0; i < nodes.length; i++) {
+                var node = nodes.item(i);
+                if (node == delli){
+                    console.log(i);
+                    if(snapshots.length-1 == node) {
+                        snapshots.pop();
+                        console.log(snapshots);
+                    }else {
+                        snapshots.splice(i,1);
+                    }
+                    parent.removeChild(delli);
+                }
+            }
+            
+            console.log(snapshots);
+        }
+        if(delbtns.length != 0){
+            for(let index in delbtns) {
+                delbtns[index].addEventListener("click", delsc,false);
+            }
+        }
+    }
+    //전체삭제버튼
+    document.getElementById("delall").onclick = function() {    
+        if(snapshots.length == 0) {
+            swal("⛔","삭제 할 스크린샷이 없습니다.");
+        }else {
+            while(output.firstChild){
+                output.removeChild(output.firstChild);
+            }
+            while(snapshots.length != 0){
+                snapshots.pop();
+            }
+        }
+    }
+    //움짤만들기
+    function makegif() {
+        let gifplay = document.getElementById("gifplay");
+        let cnt = 0;
+        let canvas = document.getElementById("gifCanvas");
+
+        if(snapshots.length == 0){
+            swal("⛔","스크린샷이 없습니다. 스크린샷을 만들어주세요.");
+        }else {
+            gifplay.style.display = "block";
+            let interval = window.setInterval(function(){
+            canvas.getContext('2d').drawImage(snapshots[cnt++],0,0,480,270);
+            if(cnt == snapshots.length){
+                clearInterval(interval);
+            }
+
+            }, 150);
+        }
+    }
+    document.getElementById("btngif").onclick = makegif;
+    document.getElementById("gifCanvas").onclick = makegif;
+
+    //플레이리스트
+    function handler(e){
+        e.preventDefault(); //이벤트 취소(if)
+        videotarget = this.getAttribute("value"); //저장된 값 반환
+        filename = videotarget.substr(0,videotarget.lastIndexOf('.')); //문자열 자르기
+        vid = document.querySelector("#videowrap video");
+        source=document.querySelectorAll("#videowrap video source");
+        source[0].src = filename+".mp4";
+        video.load();
+        video.play();
+    }
+        
+    let video_player = document.getElementById("videowrap");
+    let links = video_player.getElementsByTagName('li');
+    for(let i=0; i<links.length; i++){
+        links[i].onclick = handler;
+    }
+
+    function click(){
+        let play = document.getElementById("ul");
+        for(let index in play.childNodes){
+            let last = play.childNodes[index].value;
+        }
+        result.addEventListener('click', last);
+    }
+
+</script>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>오조라고 : MultiMedia</title>
+    <!--favicon-->
+    <link rel="icon" href="img/html5_18891.ico" />
+    <!--폰트어썸-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <!--reset.css-->
+    <link rel="stylesheet" href="css/reset.css" />
+    <!--노토산스 폰트-->
+    <link rel="stylesheet" href="css/notoserif.css" />
+    <!--템플릿용 css를 외부css로-->
+    <link rel="stylesheet" href="css/default.css" />
+	<style>
+		#imagewrap {
+			text-align: center;
+		}
+		#imagetitle {
+            display: inline-block;
+            width: 1100px;
+			margin: 20px auto;
+			font-size: 50px;
+			font-weight: 700;
+		}
+        #dropZone {
+            display: inline-block;
+            width: 600px;
+            height: 300px;
+            border: 3px dashed #dbdbdb;
+            line-height: 150px;
+        }
+        #inputHere {
+            display: inline-block;
+            width: 600px;
+            height: 150px;
+            font-size: 20px;
+        }
+        #inputHere i {
+            display: block;
+            font-size: 100px;
+            margin-top: 50px;
+            color: #dbdbdb;
+        }
+        #inputHere span {
+            display: block;
+            font-weight: 600;
+            height: 25px;
+        }
+        #fileupload {
+            display: none;
+            overflow: hidden;
+            position: absolute;
+        }
+        #inputHere label {
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        #inputHere label:hover {
+            color: #dbdbdb;
+        }
+        #gallery {
+            width: 1100px;
+            min-height: 300px;
+            margin: 30px auto;
+            background-color: #F5F5F5;
+        }
+        #gallery img{
+            width: 30%;
+            margin: 1.66%;
+        }
+
+	</style>
+</head>
+<body>
+	<header id="header">
+		<div class="aux">
+			<h1 id="logo">
+				<a href="">
+					<img src="img/Other-html-5-icon.png" height="70"/>
+					<span>오조라고</span>
+				</a>
+			</h1>
+			<nav id="gnb">
+				<h2 class="screen_out">주요서비스</h2>
+				<ul>
+					<li>
+						<a href="image.html">
+							IMAGE
+						</a>
+					</li>
+					<li>
+						<a href="audio.html">
+							AUDIO
+						</a>
+					</li>
+					<li>
+						<a href="video.html">
+							VIDEO
+						</a>
+					</li>
+				</ul>
+			</nav><!--//#gnb-->
+		</div><!--//.aux-->
+	</header><!--//#header-->
+	<main id="content">
+		<div class=".aux">
+			<div id="imagewrap">
+				<div id="imagetitle">
+					IMAGE
+				</div>
+                <div>
+                    <div id="dropZone">
+                        <div id="inputHere">
+                            <i class="fas fa-arrow-down"></i>
+                            <span>여기로 이미지 파일을 끌어오세요</span>
+                            <input id="fileupload" type="file" name="file" accept="image/*" onchange="preview(this)" >
+                            <label for="fileupload">파일 선택</label>
+                        </div>
+                    </div>
+                </div>
+                <div id="gallery">
+
+                </div>
+			</div>
+		</div>
+	</main><!--//#content-->
+	<footer id="footer">
+		<div class="aux">
+			<div id="policy">
+				<h4 class="screen_out">정책 및 약관</h4>
+				<ul>
+					<li><a href="">회사소개</a></li><!--
+						--><li><a href="">광고</a></li><!--
+						--><li><a href="">이용약관</a></li><!--
+						--><li><a href=""><strong>개인정보이용약관</strong></a></li><!--
+						--><li><a href="">고객센터</a></li>
+				</ul>
+			</div><!-- //policy  -->
+			<address>&copy; 2021 <a href="">5jolago</a></address>
+		</div><!--//.aux-->
+	</footer><!--//#footer-->
+</body>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    let dropZone = document.getElementById('dropZone');
+
+    // Optional.   Show the copy icon when dragging over.  Seems to only work for chrome.
+    dropZone.addEventListener('dragover', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'copy';
+    });
+
+    //drag and drop
+    dropZone.addEventListener('drop', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        //파일배열
+        let files = e.dataTransfer.files;
+        
+        for (let i=0, file; file=files[i]; i++) {
+            if (file.type.match(/image.*/)) {
+                let reader = new FileReader();
+
+                reader.onload = function(e2) {
+                    let img = document.createElement('img');
+                    img.src= e2.target.result;
+                    let gallery = document.getElementById('gallery');
+                    gallery.appendChild(img);
+                }
+
+                reader.readAsDataURL(file);
+            }else {
+                swal("⛔","이미지 파일만 선택해 주세요.");
+            }
+        }
+    });
+
+    function preview(e) {
+
+        let file = e.files;
+        console.log(file);
+        
+        if(!/\.(gif|jpg|jpeg|png)$/i.test(file[0].name)){
+            swal("⛔","이미지 파일만 선택해 주세요.");
+        }else {
+                
+            let reader = new FileReader();
+
+            reader.onload = function(e2) {
+                let img = document.createElement('img');
+                img.src= e2.target.result;
+                let gallery = document.getElementById('gallery');
+                gallery.appendChild(img);
+            }
+
+            reader.readAsDataURL(file[0]); // start reading the file data.
+        }
+    }
+
+</script>
+</html>

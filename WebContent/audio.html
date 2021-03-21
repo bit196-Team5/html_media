@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>오조라고 : MultiMedia</title>
+    <!--favicon-->
+    <link rel="icon" href="img/html5_18891.ico" />
+    <!--폰트어썸-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <!--reset.css-->
+    <link rel="stylesheet" href="css/reset.css" />
+    <!--노토산스 폰트-->
+    <link rel="stylesheet" href="css/notoserif.css" />
+    <!--템플릿용 css를 외부css로-->
+    <link rel="stylesheet" href="css/default.css" />
+	<style>
+		#audiowrap {
+			width: 1100px;
+			height: 800px;
+			margin: 0 auto;
+			text-align: center;
+		}
+		#audiotitle {
+			width: 100%;
+			margin: 20px 0 35px 0;
+			font-size: 50px;
+			font-weight: 700;
+		}
+		#playListDiv {
+			float: left;
+			width: 400px;
+			margin-left: 100px;
+            font-size: 20px;
+            font-weight: 700;
+       	}
+		#playListDiv span {
+			display: inline-block;
+			font-size: 25px;
+			padding: 10px;
+			width: 400px;
+			color: #BDBDBD;
+			box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+			transition: transform 0.5s;
+		}
+		#playListDiv span i {
+			font-size: 18px;
+		}
+		#playListDiv ul {
+			position: relative;
+        }
+		#playListDiv ul li {
+			padding: 10px;
+			width: 400px;
+			height: 45px;
+			background-color: #fff;
+			box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+			transition: transform 0.5s;
+			cursor: pointer;
+		}
+		#playListDiv ul li:hover {
+			background-color: #f2f2f2;
+		}
+		#musicDiv {
+			display: inline-block;
+			width: 500px;
+			margin-left: 50px;
+			background-color: #f2f2f2;
+		}
+		#coverImage {
+			display: inline-block;
+			width: 500px;
+		}
+		#coverImageSrc {
+			width: 500px;
+			height: 500px;
+		}
+		#musicName {
+			margin: 20px auto;
+			font-weight: 700;
+			font-size: 25px;
+		}
+		#playWrap {
+			float: left;
+			width: 260px;
+			margin-left: 85px;
+		}
+		#volumeSliderWrap {
+			float: left;
+		}
+		#myControl_volume {
+			clear: both;
+			margin-bottom: 20px;
+		}
+		#speedSet {
+            background-color: #f2f2f2;
+			border: 0;
+            width: 150px;
+            padding: 10px 0;
+            margin: 0 15px;
+            font-weight: 700;
+            font-size: 17px;
+			color: #474747;
+            text-align-last: center;
+            text-align: center;
+            -ms-text-align-last: center;
+            -moz-text-align-last: center;
+            cursor: pointer;
+        }
+		#footer {
+			clear: both;
+		}
+	</style>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script>
+	let song = {
+	            "SONGLIST": [
+	                {
+	                    "snum": "1",
+	                    "vocal": "브레이브 걸스",
+	                    "song": "롤린",
+	                    "size": "03분 17초",
+	                    "image":'http://asq.kr/HkpfFVSqIBWBfD',
+	                    "file": "audio/브레이브 걸스-롤린.mp3"
+	                },
+	                {
+	                    "snum": "2",
+	                    "vocal": "폴킴",
+	                    "song": "비",
+	                    "size": "03분 58초",
+	                    "image": 'http://asq.kr/6v09wwMTcmr69w',
+	                    "file": "audio/폴킴-비.mp3"
+	                },
+	                {
+	                    "snum": "3",
+	                    "vocal": "폴킴",
+	                    "song": "너란 주의보",
+	                    "size": "03분 40초",
+	                    "image":'http://asq.kr/R7fJA7Vf4PfdcQ',
+	                    "file": "audio/폴킴-너란 주의보.mp3"
+	                },
+	                {
+	                    "snum": "4",
+	                    "vocal": "아이유",
+	                    "song": "celebrity",
+	                    "size": "03분 18초",
+	                    "image":'http://asq.kr/u6yfWttGtoSaqf',
+	                    "file":"audio/아이유-celebrity.mp3"
+	                },
+	                {
+	                    "snum": "5",
+	                    "vocal": "원슈타인",
+	                    "song": "적외선카메라",
+	                    "size": "03분 26초",
+	                    "image":'http://asq.kr/CI5KsJ2RYpzcz2',
+	                    "file":"audio/원슈타인-적외선카메라.mp3"
+	                },
+	                {
+	                    "snum": "6",
+	                    "vocal": "릴보이",
+	                    "song": "내일이 오면",
+	                    "size": "04분 36초",
+	                    "image":'http://asq.kr/Pms4ZHr0EaWLIL',
+	                    "file":"audio/릴보이-내일이오면.mp3"
+	                },
+	                {
+	                    "snum": "7",
+	                    "vocal": "ph-1",
+	                    "song": "different summer",
+	                    "size": "03분 35초",
+	                    "image":'http://asq.kr/eZFOJwETiOcEku',
+	                    "file":"audio/ph-1-different summer.mp3"
+	                },
+	                {
+	                    "snum": "8",
+	                    "vocal": "ph-1",
+	                    "song": "okay",
+	                    "size": "03분 22초",
+	                    "image":'http://asq.kr/v1pQSdgxu6wciU',
+	                    "file":"audio/ph-1-okay.mp3"
+	                },
+	                {
+	                    "snum": "9",
+	                    "vocal": "폴킴",
+	                    "song": "커피한잔할래요",
+	                    "size": "04분 07초",
+	                    "image":'http://asq.kr/nO6hgbJGrIRzzB',
+	                    "file":"audio/폴킴-커피한잔할래요.mp3"
+	                },
+	                {
+	                    "snum": "10",
+	                    "vocal": "파테코",
+	                    "song": "rainy day",
+	                    "size": "03분 38초",
+	                    "image":'http://asq.kr/3X0LErms0iiK1U',
+	                    "file":"audio/파테코-rainy day.mp3"
+	                }
+	            ]
+	    }
+		window.onload = function(){
+			//선언부분
+			let songList = song.SONGLIST;
+			let playList = document.getElementById("playList");
+			let realAudio = document.getElementById("realAudio");
+			let coverImageSrc = document.getElementById("coverImageSrc");
+			let speedSet = document.getElementById("speedSet");
+			let playButton = document.getElementById("playButton");
+			let volumeMute = document.getElementById("volumeMute");
+			let volumeSlider = document.getElementById("volumeSlider");
+			let backwordButton = document.getElementById("backwordButton");
+			let forwardButton = document.getElementById("forwardButton");
+			let musicName = document.getElementById("musicName"); 
+			
+			//제목띄우기
+			let musicNameText = document.createTextNode(songList[0].vocal+"-"+songList[0].song);
+			musicName.append(musicNameText);
+			
+			//제목띄우기 함수
+			let musicNamePrint = function(index){
+				musicName.removeChild(musicName.lastChild);
+				musicNameText = "";
+				musicNameText = document.createTextNode(songList[index].vocal+"-"+songList[index].song);
+				musicName.append(musicNameText);
+			}
+			
+			//처음재생곡지정 (브레이브걸스 - 롤린)
+			realAudio.src = songList[0].file;
+			coverImageSrc.src = songList[0].image;
+			console.log(songList[0].image);
+			console.log(coverImageSrc.src);
+			
+			//음악 리스트 만들기
+			let makePlayList = function(inputdata) {
+				for(let index in inputdata){
+					let li = document.createElement("li");
+					let txt = document.createTextNode(inputdata[index].vocal+"-"+inputdata[index].song);
+					li.setAttribute("value", inputdata[index].snum);
+					li.append(txt);
+					playList.append(li);
+				}
+			}
+			makePlayList(songList); 	//document에 리스트 추가
+			console.log(playList);		//console 테스트
+			
+			
+			//리스트 더블클릭시 노래시작
+			playList.onclick = function(event){
+				let target = getEventTarget(event); //<li value="1">브레이브 걸스 - 롤린 </li>
+				for(let index in songList){
+					if(songList[index].snum==target.value){
+						realAudio.src = songList[index].file;
+						coverImageSrc.src = songList[index].image;
+						musicNamePrint(index);
+					}
+				}
+				playPause();
+			}
+			
+			/*
+			let clickList = function(e){
+				realAudio.pause();		//노래중단
+			}
+			*/
+			
+			//이전곡 재생
+			backwordButton.onclick = function(){
+				for(let index in songList){
+					if(songList[index].image==coverImageSrc.src){
+						//첫번째곡일때
+						if(songList[index].snum=="1"){
+							realAudio.src = songList[songList.length-1].file;
+							coverImageSrc.src = songList[songList.length-1].image;
+							musicNamePrint(songList.length-1);
+							return;
+						}
+						realAudio.src = songList[index-1].file;
+						coverImageSrc.src = songList[index-1].image;
+						musicNamePrint(index-1);
+					}
+				}
+				playPause();
+			}
+			
+
+			//다음곡 재생
+			forwardButton.onclick = function(){
+				let count = 0;
+				for(let index in songList){
+					if(songList[index].image==coverImageSrc.src){
+						count=index;
+						//마지막곡일때
+						if(songList[index].snum==songList.length){
+							realAudio.src = songList[0].file;
+							coverImageSrc.src = songList[0].image;
+							musicNamePrint(0);
+							return;
+						}
+					}	
+				}
+				let newint = parseInt(++count);
+				console.log(newint);
+				realAudio.src = songList[newint].file;
+				coverImageSrc.src = songList[newint].image;
+				musicNamePrint(newint);
+				playPause();
+			}
+			
+			
+			//노래재생 & 멈춤
+			let playPause = function(){
+				if (realAudio.paused) {
+					realAudio.play();
+					playButton.src = "img/pause.png"
+				} else {
+					realAudio.pause();
+					playButton.src = "img/play-button.png"
+				}
+			}
+			
+			
+			//음소거
+			function mute(){
+				if (realAudio.muted) {
+					realAudio.muted = false;
+					volumeMute.src = "img/speaker.png"
+					swal("🔊","음소거 off");
+				} else {
+					realAudio.muted = true;
+					volumeMute.src = "img/mute.png"
+					swal("🔈","음소거 on");				
+				}
+			}
+			
+			
+			//볼륨슬라이더
+			let setVolume = function(){
+				realAudio.volume = volumeSlider.value / 100;
+			}
+			
+			//재생바슬라이더
+		
+			
+			//함수실행
+			//speedSet.addEventListener('change', setPlaySpeed(this));		//재생속도
+			playButton.addEventListener('click', playPause);		//음악재생/중단
+			volumeMute.addEventListener('click', mute);		//음소거
+			volumeSlider.addEventListener('click', setVolume);		//볼륨슬라이더
+			
+	}
+	
+	</script>
+</head>
+<body>
+	<header id="header">
+		<div class="aux">
+			<h1 id="logo">
+				<a href="">
+					<img src="img/Other-html-5-icon.png" height="70"/>
+					<span>오조라고</span>
+				</a>
+			</h1>
+			<nav id="gnb">
+				<h2 class="screen_out">주요서비스</h2>
+				<ul>
+					<li>
+						<a href="image.html">
+							IMAGE
+						</a>
+					</li>
+					<li>
+						<a href="audio.html">
+							AUDIO
+						</a>
+					</li>
+					<li>
+						<a href="video.html">
+							VIDEO
+						</a>
+					</li>
+				</ul>
+			</nav><!--//#gnb-->
+		</div><!--//.aux-->
+	</header><!--//#header-->
+	<main id="content">
+		<div class=".aux">
+			<div id="audiowrap">
+				<div id="audiotitle">
+					AUDIO
+				</div>
+				<!-- 플레이리스트DIV -->
+				<div id="playListDiv" >
+					<span><i class="fas fa-music"></i> PlayList <i class="fas fa-music"></i></span>
+					<ul id="playList">
+					</ul>					
+				</div>
+
+				<!-- musicDIV -->
+				<div id="musicDiv" >
+					<!-- 커버이미지 -->
+					<div id="coverImage">
+						<img id="coverImageSrc" src="">
+					</div>
+					<!-- 노래제목 -->
+					<div id="musicName">
+					</div>
+					<!-- 음악컨트롤러 -->
+					<div id="control">
+					<audio id="realAudio" src=""></audio>
+					</div>
+					<div id="myControl">
+						<div id="myControl_play">
+						<!-- 재생바 -->
+							<div id=playWrap>
+								<!-- 이전곡재생 -->
+								<input id="backwordButton" type="image" src="img/backward.png" width="50" height="50">
+								<!-- 재생&중단 -->
+								<input id="playButton" type="image" src="img/play-button.png" width="50" height="50">
+								<!-- 다음곡재생 -->
+								<input id="forwardButton" type="image" src="img/forward.png" width="50" height="50">
+								<!-- 음소거 -->
+								<input id="volumeMute" type="image" src="img/speaker.png" width="50" height="50">
+							</div>
+							<!-- 볼륨바 -->
+							<div id="volumeSliderWrap">
+								<input id="volumeSlider" type="range" min="0" max="100" value="0" step="1">
+							</div>
+							<div id="myControl_volume">
+								<!-- 재생속도지정 -->
+								<select id="speedSet" onchange="setPlaySpeed(this)">
+									<option selected disabled>재생속도</option>
+									<option value="0.5">0.5배속</option>
+									<option value="1.0">1.0배속</option>
+									<option value="1.5">1.5배속</option>
+									<option value="2.0">2.0배속</option>
+									<option value="10.0">10.0배속</option>
+								</select>
+								</div>
+						</div>	
+					</div>
+				</div>	
+			</div>
+		</div>
+	</main><!--//#content-->
+	<footer id="footer">
+		<div class="aux">
+			<div id="policy">
+				<h4 class="screen_out">정책 및 약관</h4>
+				<ul>
+					<li><a href="">회사소개</a></li><!--
+						--><li><a href="">광고</a></li><!--
+						--><li><a href="">이용약관</a></li><!--
+						--><li><a href=""><strong>개인정보이용약관</strong></a></li><!--
+						--><li><a href="">고객센터</a></li>
+				</ul>
+			</div><!-- //policy  -->
+			<address>&copy; 2021 <a href="">5jolago</a></address>
+		</div><!--//.aux-->
+	</footer><!--//#footer-->
+</body>
+<script type="text/javascript">
+
+//재생속도
+function setPlaySpeed(e){
+	switch (e.value) {
+	case "0.5":
+		realAudio.playbackRate = 0.5;
+		break;
+	case "1.0":
+		realAudio.playbackRate = 1.0;
+		break;
+	case "1.5":
+		realAudio.playbackRate = 1.5;
+		break;
+	case "2.0":
+		realAudio.playbackRate = 2.0;
+		break;
+	case "10.0":
+		realAudio.playbackRate = 10.0;
+		break;
+	}
+}
+
+//다음곡 재생
+function getEventTarget(e){
+	e = e || window.event;
+	return e.target || e.srcElement;
+}
+</script>
+</html>
