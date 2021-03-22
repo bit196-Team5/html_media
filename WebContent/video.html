@@ -319,8 +319,8 @@
         let delbtns = document.getElementsByClassName("delli");
         console.log(delbtns);
         if(delbtns.length != 0){
-            for(let index in delbtns) {
-                delbtns[index].addEventListener("click", delsc, true);
+            for(let i=0; i<delbtns.length; i++) {
+                delbtns[i].addEventListener("click", delsc, true);
             }
         }
     }
