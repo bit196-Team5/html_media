@@ -270,6 +270,7 @@
 							realAudio.src = songList[songList.length-1].file;
 							coverImageSrc.src = songList[songList.length-1].image;
 							musicNamePrint(songList.length-1);
+							playPause(); 
 							return;
 						}
 						realAudio.src = songList[index-1].file;
@@ -280,7 +281,6 @@
 				playPause();
 			}
 			
-
 			//다음곡 재생
 			forwardButton.onclick = function(){
 				let count = 0;
@@ -292,12 +292,13 @@
 							realAudio.src = songList[0].file;
 							coverImageSrc.src = songList[0].image;
 							musicNamePrint(0);
+							playPause();
 							return;
 						}
-					}	
+					}   
 				}
 				let newint = parseInt(++count);
-				console.log(newint);
+				//console.log(newint);
 				realAudio.src = songList[newint].file;
 				coverImageSrc.src = songList[newint].image;
 				musicNamePrint(newint);
@@ -315,7 +316,6 @@
 					playButton.src = "img/play-button.png"
 				}
 			}
-			
 			
 			//음소거
 			function mute(){

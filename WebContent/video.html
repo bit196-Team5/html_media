@@ -216,7 +216,7 @@
                 </div>
                 <div id="videoplay">
                     <video id="vid" controls>
-                        <source src="/src/videoplayback.mp4" type="video/mp4">
+                        <source src="videos/basic.mp4" type="video/mp4">
                     </video>
                 </div>
                 <div id="wrap">
@@ -300,6 +300,7 @@
         snapshots.push(canvas);
         output.innerHTML = ""; 
         
+        //삭제버튼 생성
         for(let i=0; i<snapshots.length; i++) {
             let delli = document.createElement("li");
             delli.setAttribute('class','delli');
@@ -309,38 +310,37 @@
 
             let delbtn = document.createElement('button');
             delbtn.setAttribute('class','delbtn');
-            // delbtn.innerText = "<i class="fas fa-trash-alt"></i>";
             let delicon = document.createElement("i");
             delicon.setAttribute('class','fas fa-trash-alt');
             delbtn.appendChild(delicon);
             divcan.appendChild(delbtn);
         }
-        //삭제버튼
+        
         let delbtns = document.getElementsByClassName("delli");
-        function delsc(event) {
-            let parent = document.getElementById("output");
-            let delli = event.currentTarget;
-
-            let nodes = parent.childNodes;
-            for (var i = 0; i < nodes.length; i++) {
-                var node = nodes.item(i);
-                if (node == delli){
-                    console.log(i);
-                    if(snapshots.length-1 == node) {
-                        snapshots.pop();
-                        console.log(snapshots);
-                    }else {
-                        snapshots.splice(i,1);
-                    }
-                    parent.removeChild(delli);
-                }
-            }
-            
-            console.log(snapshots);
-        }
+        console.log(delbtns);
         if(delbtns.length != 0){
             for(let index in delbtns) {
-                delbtns[index].addEventListener("click", delsc,false);
+                delbtns[index].addEventListener("click", delsc, true);
+            }
+        }
+    }
+    //개별삭제기능
+    function delsc(event) {
+        let parent = document.getElementById("output");
+        let delli = event.currentTarget;
+
+        let nodes = parent.childNodes;
+        for (var i = 0; i < nodes.length; i++) {
+            var node = nodes.item(i);
+            if (node == delli){
+                console.log(i);
+                if(snapshots.length-1 == node) {
+                    snapshots.pop();
+                    console.log(snapshots);
+                }else {
+                    snapshots.splice(i,1);
+                }
+                parent.removeChild(delli);
             }
         }
     }
